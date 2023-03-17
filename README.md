@@ -1,4 +1,4 @@
-Script saving data of products from euro.com.pl store to local storage. Run from product's tab console
+Script saving data of products from euro.com.pl store to local storage. Run in product's tab in browser's console.
 
 INSTRUCTION FOR GOOGLE CHROME:
 
