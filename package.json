@@ -1,0 +1,11 @@
+{
+  "name": "web-scrapper",
+  "version": "1.0.0",
+  "description": "Script saving products from euro.com.pl to local storage",
+  "main": "euro-scraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rafał Falandys",
+  "license": "ISC"
+}
