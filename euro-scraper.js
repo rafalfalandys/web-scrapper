@@ -38,15 +38,13 @@ const scrap = () => {
 
   // Buil specification object
   const specElements = specEl ? specEl.childNodes : [];
-  let specObjects = [];
+  let spec = {};
 
   specElements.forEach((el, i) => {
     if (i !== specElements.length - 1) {
-      let specObj = {};
       const objKey = el.childNodes[0].innerText.trim();
       const objVal = el.childNodes[1].innerText.trim();
-      specObj[objKey] = objVal;
-      specObjects.push(specObj);
+      spec[objKey] = objVal;
     }
   });
 
@@ -56,7 +54,7 @@ const scrap = () => {
     webUrl,
     price,
     imgUrl,
-    specObjects,
+    spec,
   };
 
   // handle local data
