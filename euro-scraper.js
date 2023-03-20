@@ -48,29 +48,36 @@ const scrap = () => {
   const imgUrl = imgUrlEl ? imgUrlEl.src : "";
 
   // Buil specification object
-  const specElements = specEl ? specEl.childNodes : [];
+  const specNodes = specEl ? specEl.childNodes : [];
   let spec = {};
 
-  specElements.forEach((el, i) => {
-    const elChildrenLength = el.childNodes.length;
-
+  specNodes.forEach((node, i) => {
     // case one - page loads normally
-    if (i !== specElements.length - 1) {
-      const [objKey, ...objValNodes] = el.childNodes;
-      objValues = objValNodes
-        .map((node) => node.innerText)
-        .slice(0, objValNodes.length - 2)
-        .filter((el) => el !== undefined);
-      spec[objKey.innerText.trim()] = objValues;
+    if (specEl instanceof HTMLUListElement) {
+      if (i !== specNodes.length - 1) {
+        const [objKey, ...objValNodes] = node.childNodes;
+
+        objValues = objValNodes
+          .map((node) => node.innerText)
+          .slice(0, objValNodes.length - 2)
+          .filter((el) => el !== undefined);
+
+        spec[objKey.innerText.trim()] = objValues;
+      }
     }
 
-    // // case 2 page loads with <div>s instead of <li>s
-    // if (elChildrenLength === 5) {
-    //   console.log(el.childNodes);
-    //   const objKey = el.childNodes[1].innerText.trim();
-    //   const objVal = el.childNodes[3].innerText.trim();
-    //   spec[objKey] = objVal;
-    // }
+    // case 2 page loads with <div>s instead of <li>s
+    if (!(specEl instanceof HTMLUListElement)) {
+      if (node instanceof HTMLDivElement) {
+        const [_, objKey, ...objValNodes] = node.childNodes;
+
+        objValues = objValNodes
+          .filter((_, i) => i % 2 === 1)
+          .map((node) => node.innerText?.trim());
+
+        spec[objKey.innerText.trim()] = objValues;
+      }
+    }
   });
 
   // Build products object
@@ -95,3 +102,5 @@ const scrap = () => {
   console.log(prodObj);
   return `Product added to local storage`;
 };
+
+scrap();
