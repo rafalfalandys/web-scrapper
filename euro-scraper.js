@@ -57,7 +57,6 @@ const scrap = () => {
     // case one - page loads normally
     if (i !== specElements.length - 1) {
       const [objKey, ...objValNodes] = el.childNodes;
-      console.log(objKey.innerText.trim());
       objValues = objValNodes
         .map((node) => node.innerText)
         .slice(0, objValNodes.length - 2)
@@ -96,5 +95,3 @@ const scrap = () => {
   console.log(prodObj);
   return `Product added to local storage`;
 };
-
-scrap();
