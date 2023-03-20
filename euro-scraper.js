@@ -108,3 +108,5 @@ const scrap = () => {
   console.log(prodObj);
   return `Product added to local storage`;
 };
+
+scrap();
