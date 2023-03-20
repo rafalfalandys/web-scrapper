@@ -26,9 +26,10 @@ const scrap = () => {
       "body > ems-root > eui-root > eui-dropdown-host > div.content > ems-euro-mobile > div > ems-product > ems-euro-mobile-product-page > div > ems-euro-mobile-product-card > div > div.product-card__grid > div.product-card__intro.\\|.box-kp-l > div > ems-product-gallery > div > div > ems-cart-media-gallery > gallery > gallery-core > div > gallery-slider > div > div > gallery-item.g-active-item.ng-star-inserted > div > div > div > img"
     ) || null;
 
-  const specEl = document.querySelector(
-    "body > ems-root > eui-root > eui-dropdown-host > div.content > ems-euro-mobile > div > ems-product > ems-euro-mobile-product-page > div > ems-euro-mobile-product-card > div > div.product-card__grid > ems-short-description > div > div > ul"
-  );
+  const specEl =
+    document.querySelector(
+      "body > ems-root > eui-root > eui-dropdown-host > div.content > ems-euro-mobile > div > ems-product > ems-euro-mobile-product-page > div > ems-euro-mobile-product-card > div > div.product-card__grid > ems-short-description > div > div > ul"
+    ) || null;
 
   // reading htmls
   const price = priceEl ? priceEl.innerText : "";
@@ -36,7 +37,7 @@ const scrap = () => {
   const imgUrl = imgUrlEl ? imgUrlEl.src : "";
 
   // Buil specification object
-  const specElements = specEl.childNodes;
+  const specElements = specEl ? specEl.childNodes : [];
   let specObjects = [];
 
   specElements.forEach((el, i) => {
