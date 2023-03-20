@@ -97,7 +97,9 @@ const scrap = () => {
   const localProductsJson = localStorage.getItem("products");
   let localProducts = localProductsJson ? JSON.parse(localProductsJson) : [];
   // filtering duplicates
-  localProducts = localProducts.filter((prod) => prod.title !== prodObj.title);
+  localProducts = localProducts.filter(
+    (prod) => prod.webUrl !== prodObj.webUrl
+  );
   const newLocalProducts = [...localProducts, prodObj];
 
   // set new array od products
@@ -106,5 +108,3 @@ const scrap = () => {
   console.log(prodObj);
   return `Product added to local storage`;
 };
-
-scrap();
