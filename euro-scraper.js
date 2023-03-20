@@ -95,6 +95,7 @@ const scrap = () => {
     price,
     imgUrl,
     spec,
+    timeStamp: new Date().toISOString(),
   };
 
   // handle local data
