@@ -43,7 +43,8 @@ const scrap = () => {
     null;
 
   // reading htmls
-  const price = priceEl ? priceEl.innerText : "";
+  const priceStr = priceEl ? priceEl.innerText : "";
+  const price = +priceStr.replace("zł", "").replace(",", ".").trim();
   const title = titleEl ? titleEl.innerText : "";
   const imgUrl = imgUrlEl ? imgUrlEl.src : "";
 
@@ -55,27 +56,30 @@ const scrap = () => {
     // case one - page loads normally
     if (specEl instanceof HTMLUListElement) {
       if (i !== specNodes.length - 1) {
-        const [objKey, ...objValNodes] = node.childNodes;
+        const [objKeyNode, ...objValNodes] = node.childNodes;
+
+        const objKey = objKeyNode.innerText.replace(":", "").trim();
 
         objValues = objValNodes
           .map((node) => node.innerText)
           .slice(0, objValNodes.length - 2)
           .filter((el) => el !== undefined);
 
-        spec[objKey.innerText.trim()] = objValues;
+        spec[objKey] = objValues;
       }
     }
 
     // case 2 page loads with <div>s instead of <li>s
     if (!(specEl instanceof HTMLUListElement)) {
       if (node instanceof HTMLDivElement) {
-        const [_, objKey, ...objValNodes] = node.childNodes;
+        const [_, objKeyNode, ...objValNodes] = node.childNodes;
+        const objKey = objKeyNode.innerText.replace(":", "").trim();
 
         objValues = objValNodes
           .filter((_, i) => i % 2 === 1)
           .map((node) => node.innerText?.trim());
 
-        spec[objKey.innerText.trim()] = objValues;
+        spec[objKey] = objValues;
       }
     }
   });
