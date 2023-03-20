@@ -10,7 +10,9 @@ const scrap = () => {
   const titleEl =
     document.querySelector(
       "body > ems-root > eui-root > eui-dropdown-host > div.content > ems-euro-mobile > div > ems-product > ems-euro-mobile-product-page > div > ems-euro-mobile-product-card > div > div.product-card__grid > div.product-card__intro.\\|.box-kp-l > div > div > div.product-intro__title > h1 > span.product-intro__title-text"
-    ) || null;
+    ) ||
+    document.querySelector("#product-main > div.product-header > div > h1") ||
+    null;
 
   const priceEl =
     document.querySelector(
@@ -19,17 +21,26 @@ const scrap = () => {
     document.querySelector(
       "body > ems-root > eui-root > eui-dropdown-host > div.content > ems-euro-mobile > div > ems-product > ems-euro-mobile-product-page > div > ems-euro-mobile-product-card > div > div.product-card__grid > div.product-card__sidebar.ng-star-inserted > eui-box.product-card__tabs.box.box--shadow.box--radius.box--full-width > div > ems-product-purchase > div > ems-price > div > div"
     ) ||
+    document.querySelector(
+      "#product-upselling > div.product-detail-prices > ul > li.price-tab.price-promotion-tab.is-active > a > div.product-price.selenium-price-normal"
+    ) ||
     null;
 
   const imgUrlEl =
     document.querySelector(
       "body > ems-root > eui-root > eui-dropdown-host > div.content > ems-euro-mobile > div > ems-product > ems-euro-mobile-product-page > div > ems-euro-mobile-product-card > div > div.product-card__grid > div.product-card__intro.\\|.box-kp-l > div > ems-product-gallery > div > div > ems-cart-media-gallery > gallery > gallery-core > div > gallery-slider > div > div > gallery-item.g-active-item.ng-star-inserted > div > div > div > img"
-    ) || null;
+    ) ||
+    document.querySelector("#big-photo > img") ||
+    null;
 
   const specEl =
     document.querySelector(
       "body > ems-root > eui-root > eui-dropdown-host > div.content > ems-euro-mobile > div > ems-product > ems-euro-mobile-product-page > div > ems-euro-mobile-product-card > div > div.product-card__grid > ems-short-description > div > div > ul"
-    ) || null;
+    ) ||
+    document.querySelector(
+      "#product-main > div.sticky-area > div.product-info > div.attributes-wrapper > div"
+    ) ||
+    null;
 
   // reading htmls
   const price = priceEl ? priceEl.innerText : "";
@@ -41,11 +52,26 @@ const scrap = () => {
   let spec = {};
 
   specElements.forEach((el, i) => {
+    const elChildrenLength = el.childNodes.length;
+
+    // case one - page loads normally
     if (i !== specElements.length - 1) {
-      const objKey = el.childNodes[0].innerText.trim();
-      const objVal = el.childNodes[1].innerText.trim();
-      spec[objKey] = objVal;
+      const [objKey, ...objValNodes] = el.childNodes;
+      console.log(objKey.innerText.trim());
+      objValues = objValNodes
+        .map((node) => node.innerText)
+        .slice(0, objValNodes.length - 2)
+        .filter((el) => el !== undefined);
+      spec[objKey.innerText.trim()] = objValues;
     }
+
+    // // case 2 page loads with <div>s instead of <li>s
+    // if (elChildrenLength === 5) {
+    //   console.log(el.childNodes);
+    //   const objKey = el.childNodes[1].innerText.trim();
+    //   const objVal = el.childNodes[3].innerText.trim();
+    //   spec[objKey] = objVal;
+    // }
   });
 
   // Build products object
@@ -70,3 +96,5 @@ const scrap = () => {
   console.log(prodObj);
   return `Product added to local storage`;
 };
+
+scrap();
