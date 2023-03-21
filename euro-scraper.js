@@ -47,7 +47,7 @@ const scrap = () => {
   const price = +priceStr
     .replace("zł", "")
     .replace(",", ".")
-    .replace(" ", "")
+    .replace(/\s+/g, "")
     .trim();
   const title = titleEl ? titleEl.innerText : "";
   const imgUrl = imgUrlEl ? imgUrlEl.src : "";
